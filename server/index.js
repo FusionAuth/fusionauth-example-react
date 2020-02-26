@@ -24,6 +24,8 @@ app.use(cors({
 const clientID = "5603c20d-3e32-4971-b7eb-8e9f023fc524";
 const clientSecret = "viCMOPW73hlUVyE4ja_sOdL5rGEU4GuVFY_yuy8rJ7A";
 const redirectURI = "http://localhost:9000/oauth-redirect";
+const applicationID = '5603c20d-3e32-4971-b7eb-8e9f023fc524';
+const apiKey = 'gojIS0unvaFpHKXzCIjz95DtbSmLZFBS4cQYT8Our7g';
 
 const clientPort = 8080;
 const serverPort = 9000;
@@ -52,7 +54,7 @@ app.get('/oauth-redirect', (req, res) => {
 			method: 'POST',
 			uri: 'http://localhost:9011/oauth2/token',
 			headers: {
-				'content-type': 'application/x-www-form-urlencoded'
+				'Content-Type': 'application/json'
 			},
 			qs: {
 				'client_id': clientID,
@@ -98,8 +100,11 @@ app.get('/logout', (req, res) => {
 	);
 });
 
+
+//TODO: clean up this mess
 app.get('/user', (req, res) => {
 
+	// token in session -> get user data and send it back to the react app
 	if (req.session.token) {
 
 		request(
@@ -109,7 +114,7 @@ app.get('/user', (req, res) => {
 				method: 'POST',
 				uri: 'http://localhost:9011/oauth2/introspect',
 				headers: {
-					'content-type': 'application/x-www-form-urlencoded'
+					'Content-Type': 'application/json'
 				},
 				qs: {
 					'client_id': clientID,
@@ -120,18 +125,74 @@ app.get('/user', (req, res) => {
 			// callback
 			(error, response, body) => {
 
-				if (!JSON.parse(body).active) {
-					endSession(req, res);
+				let introspectResponse = JSON.parse(body);
+
+				// valid token -> get more user data and send it back to the react app
+				if (introspectResponse.active) {
+
+					request(
+
+						// GET request to /registration endpoint
+						{
+							method: 'GET',
+							uri: `http://localhost:9011/api/user/registration/${introspectResponse.sub}/${applicationID}`,
+							headers: {
+								'Authorization': apiKey
+							}
+						},
+			
+						// callback
+						(error, response, body) => {
+						
+							let registrationResponse = JSON.parse(body);
+			
+							res.send({...introspectResponse, ...registrationResponse});
+						}
+					);
 				}
 
-				res.send(JSON.parse(body));
+				// expired token -> send nothing 
+				else {
+					endSession(req, res); //TODO: should we really clear cookies here?
+					res.send({});
+				}
 			}
 		);
 	}
 
+	// no token -> send nothing
 	else {
 		res.send({});
 	}
 });
 
-app.listen(serverPort, () => console.log(`Example app listening on port ${serverPort}.`));
+app.get('/setUserData', (req, res) => {
+
+	request(
+
+		// PATCH request to /registration endpoint
+		{
+			method: 'PATCH',
+			uri: `http://localhost:9011/api/user/registration/${req.query.userID}/${applicationID}`,
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': apiKey
+			},
+			//TODO: why does qs not work with PATCH?
+			body: JSON.stringify( {
+				"registration": {
+					'data': {
+						'userData': req.query.userData
+					}
+				}
+			})
+		},
+
+		// callback
+		(error, response, body) => {
+			res.send(JSON.parse(body).registration.data.userData);
+		}
+	);
+});
+
+app.listen(serverPort, () => console.log(`FusionAuth example app listening on port ${serverPort}.`));
