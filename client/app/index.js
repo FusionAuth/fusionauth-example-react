@@ -5,7 +5,10 @@ import './index.css';
 class App extends React.Component {
 	render() {
 		return (
-			<div>Hello World</div>
+			<div>
+				<p>Hello World</p>
+				<a href="http://localhost:9000/login">sign in</a> {/*TODO: move link to state variable*/}
+			</div>
 		);
 	}
 }
