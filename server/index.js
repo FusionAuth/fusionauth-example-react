@@ -29,37 +29,109 @@ const clientPort = 8080;
 const serverPort = 9000;
 const fusionAuthPort = 9011;
 
+function endSession(req, res) {
+	res.status(200).clearCookie('JSESSIONID');
+	req.session.destroy();
+}
+
 app.get('/', (req, res) => {
 	res.redirect(`http://localhost:${clientPort}`);
 });
 
 app.get('/login', (req, res) => {
+	//TODO: write this more cleanly... map is not cleaner, and neither is a helper method or module
 	res.redirect(`http://localhost:${fusionAuthPort}/oauth2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code`);
-	// request(
-	// 	{
-	// 		method: 'POST',
-	// 		uri: `http://localhost:${fusionAuthPort}/oauth2/authorize`,
-	// 		headers: {
-	// 			'content-type': 'application/x-www-form-urlencoded',
-	// 		},
-	// 		qs: {
-	// 			'client_id': clientID,
-	// 			'redirect_uri': redirectURI,
-	// 			'response_type': 'code'
-	// 		}
-	// 	},
-	// 	(error, response, body) => {
-	// 		res.render(body);
-	// 	}
-	// );
 });
 
 app.get('/oauth-redirect', (req, res) => {
-	res.send('returned from FusionAuth');
+
+	request(
+
+		// POST request to /token endpoint
+		{
+			method: 'POST',
+			uri: 'http://localhost:9011/oauth2/token',
+			headers: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			qs: {
+				'client_id': clientID,
+				'client_secret': clientSecret,
+				'code': req.query.code,
+				'grant_type': 'authorization_code',
+				'redirect_uri': redirectURI
+			}
+		},
+
+		// callback
+		(error, response, body) => {
+
+			// save token to session
+			req.session.token = JSON.parse(body).access_token;
+
+			// redirect to root
+			res.redirect('/');
+		}
+	);
 });
 
 app.get('/logout', (req, res) => {
 
+	request(
+
+		// GET request to /logout endpoint
+		{
+			method: 'GET',
+			uri: 'http://localhost:9011/oauth2/logout',
+			qs: `client_id=${clientID}`
+		},
+
+		// callback
+		(error, response, body) => {
+
+			// clear cookie and session (otherwise, FusionAuth will remember the user)
+			endSession(req, res);
+
+			// redirect to root
+			res.redirect('/');
+		}
+	);
+});
+
+app.get('/user', (req, res) => {
+
+	if (req.session.token) {
+
+		request(
+
+			// POST request to /introspect endpoint
+			{
+				method: 'POST',
+				uri: 'http://localhost:9011/oauth2/introspect',
+				headers: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				qs: {
+					'client_id': clientID,
+					'token': req.session.token
+				}
+			},
+
+			// callback
+			(error, response, body) => {
+
+				if (!JSON.parse(body).active) {
+					endSession(req, res);
+				}
+
+				res.send(JSON.parse(body));
+			}
+		);
+	}
+
+	else {
+		res.send({});
+	}
 });
 
 app.listen(serverPort, () => console.log(`Example app listening on port ${serverPort}.`));
