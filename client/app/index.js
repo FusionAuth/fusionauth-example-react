@@ -6,6 +6,8 @@ import Greeting from './components/Greeting.js';
 import LogInOut from './components/LogInOut.js';
 import UserData from './components/UserData.js';
 
+const config = require('../../config');
+
 class App extends React.Component {
 
 	constructor(props) {
@@ -17,7 +19,7 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:9000/user', {
+		fetch(`http://localhost:${config.serverPort}/user`, {
 			credentials: 'include' // fetch won't send cookies unless you set credentials
 		})
 			.then(response => response.json())
@@ -38,7 +40,7 @@ class App extends React.Component {
 		});
 
 		// save the change in FusionAuth
-		fetch(`http://localhost:9000/setUserData?userData=${event.target.value}&userID=${this.state.body.sub}`);
+		fetch(`http://localhost:${config.serverPort}/setUserData?userData=${event.target.value}&userID=${this.state.body.sub}`);
 	}
 
 	render() {
@@ -46,7 +48,7 @@ class App extends React.Component {
 			<div>
 				<header>
 					<Greeting body={this.state.body}/>
-					<LogInOut body={this.state.body} uri='http://localhost:9000'/> {/*TODO: move uri definition*/}
+					<LogInOut body={this.state.body} uri={`http://localhost:${config.serverPort}`}/> {/*TODO: move uri definition*/}
 				</header>
 				<main>
 					<UserData body={this.state.body} handleTextInput={this.handleTextInput}/>
