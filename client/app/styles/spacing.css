@@ -1,0 +1,41 @@
+body {
+	margin: 0;
+}
+
+#App {
+	height: 100vh;
+}
+
+header,
+main,
+footer {
+	padding: 20px 5vw;
+}
+
+header h1 {
+	margin: 0;
+}
+
+header span {
+	margin: 10px 20px 10px 0;
+}
+
+header a {
+	padding: 5px 10px;
+}
+
+footer a {
+	margin: 0 20px 0 0;
+}
+
+#UserData,
+#Response {
+	height: 100%;
+	width: 100%;
+}
+
+#Response pre,
+#UserData textarea {
+	padding: 5px 10px;
+	margin: 0;
+}

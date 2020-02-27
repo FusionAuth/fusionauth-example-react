@@ -1,0 +1,38 @@
+#App,
+main,
+#UserData,
+#Response {
+	display: flex;
+	flex-direction: column;
+}
+
+header,
+main {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@media (max-width: 750px) {
+	header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+
+#UserData {
+	flex-basis: 20%;
+}
+
+#Response {
+	flex-basis: 80%;
+}
+
+header h1,
+main,
+#UserData,
+#Response,
+#Response pre,
+#UserData textarea {
+	flex-grow: 1;
+}

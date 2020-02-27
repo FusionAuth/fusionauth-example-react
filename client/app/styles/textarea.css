@@ -1,0 +1,7 @@
+#UserData textarea {
+	resize: none;
+}
+
+#UserData textarea:read-only {
+	cursor: not-allowed;
+}
