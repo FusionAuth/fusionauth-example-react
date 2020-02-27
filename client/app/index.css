@@ -1,0 +1,70 @@
+body {
+	margin: 0;
+	font-family: sans-serif;
+}
+
+#app > div {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+header,
+main {
+	padding: 20px 50px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+main {
+	flex-grow: 1;
+}
+
+header {
+	background-color: #123;
+	color: #fed;
+}
+
+header > *,
+main > * {
+	margin: 10px;
+}
+
+h1 {
+	flex-grow: 1;
+}
+
+header a,
+header a:visited {
+	text-decoration: none;
+	color: #123;
+	background-color: #fed;
+	padding: 5px 10px;
+}
+
+header a:hover,
+header a:active {
+	text-decoration: none;
+	color: #fed;
+	background-color: #246;
+}
+
+main > * {
+	flex-basis: 50%;
+	flex-grow: 1;
+	height: 100%;
+}
+
+textarea,
+pre {
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+	padding: 5px 10px;
+}
+
+pre {
+	background-color: #123;
+	color: #fed;
+	margin-top: 0;
+}
