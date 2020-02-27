@@ -8,15 +8,19 @@ export default class LogInOut extends React.Component {
 
 	render() {
 
-		let placeholder = 'Anything you type in here will be saved to your user profile.';
+		let placeholder = 'Anything you type in here will be saved to your FusionAuth user data.';
 
 		let input = (this.props.body.active)
 			? <textarea placeholder={placeholder} onChange={this.props.handleTextInput} defaultValue={this.props.body.registration.data.userData}></textarea>
 			: <textarea placeholder={placeholder} readOnly></textarea>;
 
+		let title = (this.props.body.active)
+			? <h2>Your User Data</h2>
+			: <h2>Sign In to Edit Your User Data</h2>;
+
 		return (
 			<div id='UserData'>
-				<h2>user.data.userData</h2>
+				{title}
 				{input}
 			</div>
 		);

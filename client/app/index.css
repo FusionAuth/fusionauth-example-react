@@ -16,14 +16,16 @@ body {
 }
 
 header,
-main {
+main,
+footer {
 	padding: 20px 50px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-header {
+header,
+footer {
 	background-color: var(--color-dark);
 	color: var(--color-light);
 }
@@ -54,7 +56,6 @@ header a {
 
 header a:hover,
 header a:active {
-	text-decoration: none;
 	color: var(--color-light);
 	background-color: var(--color-alternate);
 }
@@ -100,4 +101,18 @@ textarea {
 
 textarea:read-only {
 	cursor: not-allowed;
+}
+
+footer a {
+	text-decoration: none;
+	color: var(--color-light);
+}
+
+footer a:before {
+	content: '> ';
+}
+
+footer a:hover,
+footer a:active {
+	color: var(--color-alternate);
 }

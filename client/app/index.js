@@ -56,6 +56,10 @@ class App extends React.Component {
 					<UserData body={this.state.body} handleTextInput={this.handleTextInput}/>
 					<Response body={this.state.body}/>
 				</main>
+				<footer>
+					<a href='https://fusionauth.io/docs/v1/tech/tutorials/'>Learn how this app works.</a>
+					<a href='https://twitter.com/fusionauth'>Tweet your questions at us.</a>
+				</footer>
 			</div>
 		);
 	}
