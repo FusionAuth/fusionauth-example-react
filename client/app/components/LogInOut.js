@@ -8,11 +8,11 @@ export default class LogInOut extends React.Component {
 
 	render() {
 
-		let message = (this.props.body.active)
+		let message = (this.props.body.introspect)
 			? 'sign out'
 			: 'sign in';
 
-		let path = (this.props.body.active)
+		let path = (this.props.body.introspect)
 			? '/logout'
 			: '/login';
 

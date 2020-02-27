@@ -48,7 +48,12 @@ router.get('/', (req, res) => {
 						
 							let registrationResponse = JSON.parse(body);
 			
-							res.send({...introspectResponse, ...registrationResponse});
+							res.send({
+								token: {
+									...introspectResponse,
+								},
+								...registrationResponse
+							});
 						}
 					);
 				}

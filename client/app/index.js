@@ -41,7 +41,7 @@ class App extends React.Component {
 		});
 
 		// save the change in FusionAuth
-		fetch(`http://localhost:${config.serverPort}/setUserData?userData=${event.target.value}&userID=${this.state.body.sub}`);
+		fetch(`http://localhost:${config.serverPort}/setUserData?userData=${event.target.value}&userID=${this.state.body.introspect.sub}`);
 	}
 
 	render() {
