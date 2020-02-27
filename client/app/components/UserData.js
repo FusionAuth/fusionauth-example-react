@@ -15,7 +15,8 @@ export default class LogInOut extends React.Component {
 			: <textarea placeholder={placeholder} readOnly></textarea>;
 
 		return (
-			<div>
+			<div id='UserData'>
+				<h2>user.data.userData</h2>
 				{input}
 			</div>
 		);

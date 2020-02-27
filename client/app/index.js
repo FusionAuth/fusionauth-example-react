@@ -4,6 +4,7 @@ import './index.css';
 
 import Greeting from './components/Greeting.js';
 import LogInOut from './components/LogInOut.js';
+import Response from './components/Response.js';
 import UserData from './components/UserData.js';
 
 const config = require('../../config');
@@ -45,19 +46,19 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div id='App'>
 				<header>
 					<h1>FusionAuth Example: React</h1>
 					<Greeting body={this.state.body}/>
-					<LogInOut body={this.state.body} uri={`http://localhost:${config.serverPort}`}/> {/*TODO: move uri definition*/}
+					<LogInOut body={this.state.body} uri={`http://localhost:${config.serverPort}`}/>
 				</header>
 				<main>
 					<UserData body={this.state.body} handleTextInput={this.handleTextInput}/>
-					<pre>{JSON.stringify(this.state.body, null, '\t')}</pre>
+					<Response body={this.state.body}/>
 				</main>
 			</div>
 		);
 	}
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<App/>, document.querySelector('body'));
