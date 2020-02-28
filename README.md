@@ -14,7 +14,7 @@ This simple example app shows how you can use FusionAuth in a React app to log i
 
 1. Clone this repository.
 
-	```
+	```zsh
 	git clone https://github.com/FusionAuth/fusionauth-example-react.git
 	```
 
@@ -22,18 +22,18 @@ This simple example app shows how you can use FusionAuth in a React app to log i
 
 	1. Go through the setup wizard if you haven't already.
 	1. Create a new FusionAuth application.
-	1. Set the OAuth Redirect URI to `localhost:9000/oauth-redirect`.
+	1. Set the OAuth Redirect URI to `http://localhost:9000/oauth-redirect`.
 	1. Copy your app's Client ID, Client Secret, Redirect URI, Application ID, and API Key into the `config.js` file in the root directory of this project.
 	1. Register at least one user with your application.
 
-1. Make sure FusionAuth is running, then install dependencies and start the app. The React app should automatically open in your browser at [localhost:8080](localhost:8080).
+1. Make sure FusionAuth is running, then install dependencies and start the app. The React app should automatically open in your browser at [localhost:8080](http://localhost:8080).
 
-	```
+	```zsh
 	cd server
 	npm install
 	npm start
 	```
-	```
+	```zsh
 	cd client
 	npm install
 	npm start
@@ -75,11 +75,15 @@ If there is no Access Token (or if it's expired), `/user` will instead return an
 
 All of your FusionAuth users have a `registration.data` object for storing arbitrary data related to the user. The example app allows logged-in users to modify `registration.data.userData` by changing its value in the `<textarea>`, but all `registration` information is able to be set in this way.
 
-When the `<textarea>` is changed, the React client makes a request to the Express server's `/set-user-data` route, which makes a request to FusionAuth's `/registration` endpoint. This also executes `setState()` in the React client
+When the `<textarea>` is changed, the React client makes a request to the Express server's `/set-user-data` route, which makes a request to FusionAuth's `/registration` endpoint.
 
 ## Using This Example as a Starting Point
 
-TODO
+If you want to use this example app as a jumping-off point for your own FusionAuth app, you can easily strip it down or expand upon it.
+
+- remove, replace, or add React components in `/client/app/components/` and update references in `/client/app/index.js`
+- remove, replace, or add styles in `/client/app/styles/` and update references in `/client/app/index.css`
+- remove, replace, or add routes in `/server/routes/` and update references in `/server/index.js`
 
 ## Contributing
 
