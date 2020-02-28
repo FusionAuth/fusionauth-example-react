@@ -25,8 +25,8 @@ let routes = [
 	'',
 	'login',
 	'logout',
-	'oauthRedirect',
-	'setUserData',
+	'oauth-redirect',
+	'set-user-data',
 	'user'
 ];
 routes.forEach(route => {

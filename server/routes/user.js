@@ -60,7 +60,7 @@ router.get('/', (req, res) => {
 
 				// expired token -> send nothing 
 				else {
-					endSession(req, res); //TODO: should we really clear cookies here?
+					endSession(req, res);
 					res.send({});
 				}
 			}
