@@ -10,7 +10,7 @@ This simple example app shows how you can use FusionAuth in a React app to log i
 
 	- [NodeJS](https://nodejs.org/en/download/)
 	- [MySQL](https://fusionauth.io/docs/v1/tech/installation-guide/database#install-mysql) or [Postgres](https://fusionauth.io/docs/v1/tech/installation-guide/database#install-postgresql)
-	- [FusionAuth]((https://fusionauth.io/download))
+	- [FusionAuth](https://fusionauth.io/download)
 
 1. Clone this repository.
 
