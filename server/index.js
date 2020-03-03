@@ -22,18 +22,14 @@ app.use(cors({
 
 // use routes
 let routes = [
-	'',
+	'_',
 	'login',
 	'logout',
-	'oauth-redirect',
+	'oauth-callback',
 	'set-user-data',
 	'user'
 ];
-routes.forEach(route => {
-	let routeName = (route == '') ? '_' : route;
-	let routeModule = require(`./routes/${routeName}`);
-	app.use(`/${route}`, routeModule);
-});
+routes.forEach(route => app.use(`/${route.replace(/^_$/, '')}`, require(`./routes/${route}`)));
 
 // start server
 app.listen(config.serverPort, () => console.log(`FusionAuth example app listening on port ${config.serverPort}.`));

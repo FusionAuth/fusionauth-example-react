@@ -1,4 +1,4 @@
 module.exports = (req, res) => {
-	res.status(200).clearCookie('JSESSIONID');
+	res.clearCookie('JSESSIONID');
 	req.session.destroy();
 };

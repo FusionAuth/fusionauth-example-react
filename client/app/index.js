@@ -24,18 +24,16 @@ class App extends React.Component {
 			credentials: 'include' // fetch won't send cookies unless you set credentials
 		})
 			.then(response => response.json())
-			.then((response) => {
-				this.setState({
-					body: response
-				});
-			});
+			.then(response => this.setState({
+				body: response
+			}));
 	}
 
 	handleTextInput(event) {
 
 		// update this.state.body.registration.data.userData
 		let body = this.state.body;
-		body.registration.data.userData = event.target.value;
+		body.registration.data = { userData: event.target.value };
 		this.setState({
 			body: body
 		});

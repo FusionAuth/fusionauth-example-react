@@ -15,19 +15,13 @@ router.get('/', (req, res) => {
 				'Content-Type': 'application/json',
 				'Authorization': config.apiKey
 			},
-			//TODO: why does qs not work with PATCH?
-			body: JSON.stringify( {
-				"registration": {
+			body: JSON.stringify({
+				'registration': {
 					'data': {
 						'userData': req.query.userData
 					}
 				}
 			})
-		},
-
-		// callback
-		(error, response, body) => {
-			res.send(JSON.parse(body).registration.data.userData);
 		}
 	);
 });
