@@ -3,27 +3,41 @@ const router = express.Router();
 const request = require('request');
 const config = require('../../config');
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
+  // fetch the user using the token in the session so that we have their ID
+  request(
+    // POST request to /introspect endpoint
+    {
+      method: 'POST',
+      uri: `http://localhost:${config.fusionAuthPort}/oauth2/introspect`,
+      form: {
+        'client_id': config.clientID,
+        'token': req.session.token
+      }
+    },
 
-	request(
+    // callback
+    (error, response, body) => {
+      let introspectResponse = JSON.parse(body);
 
-		// PATCH request to /registration endpoint
-		{
-			method: 'PATCH',
-			uri: `http://localhost:${config.fusionAuthPort}/api/user/registration/${req.query.userID}/${config.applicationID}`,
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': config.apiKey
-			},
-			body: JSON.stringify({
-				'registration': {
-					'data': {
-						'userData': req.query.userData
-					}
-				}
-			})
-		}
-	);
+      request(
+        // PATCH request to /registration endpoint
+        {
+          method: 'PATCH',
+          uri: `http://localhost:${config.fusionAuthPort}/api/user/registration/${introspectResponse.sub}/${config.applicationID}`,
+          headers: {
+            'Authorization': config.apiKey
+          },
+          json: true,
+          body: {
+            'registration': {
+              'data': req.body
+            }
+          }
+        }
+      );
+    }
+  );
 });
 
 module.exports = router;

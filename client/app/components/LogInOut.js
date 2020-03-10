@@ -1,23 +1,21 @@
 import React from 'react';
 
 export default class LogInOut extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-	constructor(props) {
-		super(props);
-	}
+  render() {
+    let message = (this.props.body.token)
+      ? 'sign out'
+      : 'sign in';
 
-	render() {
+    let path = (this.props.body.token)
+      ? '/logout'
+      : '/login';
 
-		let message = (this.props.body.token)
-			? 'sign out'
-			: 'sign in';
-
-		let path = (this.props.body.token)
-			? '/logout'
-			: '/login';
-
-		return (
-			<a href={this.props.uri + path}>{message}</a>
-		);
-	}
+    return (
+      <a href={this.props.uri + path}>{message}</a>
+    );
+  }
 }

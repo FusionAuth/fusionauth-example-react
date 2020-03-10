@@ -1,11 +1,13 @@
 module.exports = {
 
 	// FusionAuth info (copied from the FusionAuth admin panel)
-	clientID: '5603c20d-3e32-4971-b7eb-8e9f023fc524',
-	clientSecret: 'viCMOPW73hlUVyE4ja_sOdL5rGEU4GuVFY_yuy8rJ7A',
+	clientID: '85a03867-dccf-4882-adde-1a79aeec50df',
+	clientSecret: 'JNlTw3c9B5NrVhF-cz3m0fp_YiBg-70hcDoiQ2Ot30I',
 	redirectURI: 'http://localhost:9000/oauth-callback',
-	applicationID: '5603c20d-3e32-4971-b7eb-8e9f023fc524',
-	apiKey: 'gojIS0unvaFpHKXzCIjz95DtbSmLZFBS4cQYT8Our7g',
+	applicationID: '85a03867-dccf-4882-adde-1a79aeec50df',
+
+	// our FusionAuth api key
+	apiKey: 'bf69486b-4733-4470-a592-f1bfce7af580',
 
 	// ports
 	clientPort: 8080,
