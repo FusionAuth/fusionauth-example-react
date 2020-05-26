@@ -22,7 +22,7 @@ This simple example app shows how you can use FusionAuth in a React app to log i
 
 	1. Go through the setup wizard if you haven't already.
 	1. Create a new FusionAuth application.
-	1. Set the OAuth Redirect URI to `http://localhost:9000/oauth-redirect`.
+	1. Set the OAuth Redirect URI to `http://localhost:9000/oauth-callback`.
 	1. Copy your app's Client ID, Client Secret, Redirect URI, Application ID, and API Key into the `config.js` file in the root directory of this project.
 	1. Register at least one user with your application.
 
