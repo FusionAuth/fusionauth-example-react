@@ -3,7 +3,10 @@
 ## About
 
 This simple example app shows how you can use FusionAuth in a React app to log in, log out, and manipulate user data.
+You can view the corresponding blog post: https://fusionauth.io/blog/2020/03/10/securely-implement-oauth-in-react/
 
+This application will use an OAuth Authorization Code workflow and the PKCE extension to log users in and a NodeJS backend to store your access token securely.
+PKCE stands for Proof Key for Code Exchange, and is often pronounced “pixie”.
 ## Setup
 
 1. Make sure you have everything you need to run this app:
