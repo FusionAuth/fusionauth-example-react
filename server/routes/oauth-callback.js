@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
         'client_id': config.clientID,
         'client_secret': config.clientSecret,
         'code': req.query.code,
+        'code_verifier': req.session.verifier,
         'grant_type': 'authorization_code',
         'redirect_uri': config.redirectURI
       }
