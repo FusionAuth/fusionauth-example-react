@@ -16,8 +16,8 @@
   "author": "Matt Boisseau <matt@fusionauth.io>",
   "license": "ISC",
   "dependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
