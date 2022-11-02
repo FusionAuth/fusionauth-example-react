@@ -1,93 +1,86 @@
-# FusionAuth Example: React
+# Example: Using React with FusionAuth
+This project contains an example project that illustrates using FusionAuth with a React front-end and a NodeJS/Express backend.
 
-## About
+## Prerequisites
+You will need the following things properly installed on your computer.
 
-This simple example app shows how you can use FusionAuth in a React app to log in, log out, and manipulate user data.
-You can view the corresponding blog post: https://fusionauth.io/blog/2020/03/10/securely-implement-oauth-in-react/
+* [Git](http://git-scm.com/): Presumably you already have this on your machine if you are looking at this project locally; if not, use your platform's package manager to install git, and `git clone` this repo.
+* {THING requirements}
+* OPTIONAL: [Docker](https://www.docker.com): If you wish to run FusionAuth from within a Docker container.
 
-This application will use an OAuth Authorization Code workflow and the PKCE extension to log users in and a NodeJS backend to store your access token securely.
-PKCE stands for Proof Key for Code Exchange, and is often pronounced “pixie”.
-## Setup
+## Installation
+* `git clone https://github.com/FusionAuth/fusionauth-example-template`
+* `cd fusionauth-example-template`
+* `docker-compose up`
+* {Other steps}
 
-1. Make sure you have everything you need to run this app:
+## FusionAuth Configuration
+This example assumes that you will run FusionAuth from a Docker container. In the root of this project directory (next to this README) are two files [a Docker compose file](./docker-compose.yml) and an [environment variables configuration file](./.env). Assuming you have Docker installed on your machine, a `docker-compose up` will bring FusionAuth up on your machine.
 
-	- [NodeJS](https://nodejs.org/en/download/)
-	- [MySQL](https://fusionauth.io/docs/v1/tech/installation-guide/database#install-mysql) or [Postgres](https://fusionauth.io/docs/v1/tech/installation-guide/database#install-postgresql)
-	- [FusionAuth](https://fusionauth.io/download)
+The FusionAuth configuration files also make use of a unique feature of FusionAuth, called Kickstart: when FusionAuth comes up for the first time, it will look at the [Kickstart file](./kickstart/kickstart.json) and mimic API calls to configure FusionAuth for use. It will perform all the necessary setup to make this demo work correctly, but if you are curious as to what the setup would look like by hand, the "FusionAuth configuration (by hand)" section of this README describes it in detail.
 
-1. Clone this repository.
+For now, get FusionAuth in Docker up and running (via `docker-compose up`) if it is not already running; to see, [click here](http://localhost:9011/) to verify it is up and running.
 
-	```zsh
-	git clone https://github.com/FusionAuth/fusionauth-example-react.git
-	```
+> **NOTE**: If you ever want to reset the FusionAuth system, delete the volumes created by docker-compose by executing `docker-compose down -v`. FusionAuth will only apply the Kickstart settings when it is first run (e.g., it has no data configured for it yet).
 
-1. Configure your app in the FusionAuth admin panel (default [localhost:9011](localhost:9011)).
 
-	1. Go through the setup wizard if you haven't already.
-	1. Create a new FusionAuth application.
-	1. Set the OAuth Redirect URI to `http://localhost:9000/oauth-callback`.
-	1. Copy your app's Client ID, Client Secret, Redirect URI, Application ID, and API Key into the `config.js` file in the root directory of this project.
-	1. Register at least one user with your application.
+## Running / Development
 
-1. Make sure FusionAuth is running, then install dependencies and start the app. The React app should automatically open in your browser at [localhost:8080](http://localhost:8080).
 
-	```zsh
-	cd server
-	npm install
-	npm start
-	```
-	```zsh
-	cd client
-	npm install
-	npm start
-	```
 
-## Understanding the Example
+## FusionAuth configuration (by hand)
+Again, remember that all of this is already automated for you as part of the [Kickstart file](kickstart/kickstart.json) that will be executed the first time FusionAuth comes up, and if you ever need to regenerate it, you can delete the Docker volumes (`docker-compose down -v`) to remove them entirely (which will then cause FusionAuth to initialize itself from the Kickstart file on the next startup).
 
-### Structure
+If you wish to run FusionAuth directly from your machine, check out the [FusionAuth download page](https://fusionauth.io/download) for different ways to install locally, depending on your operating system and/or package manager of choice:
 
-The app has three parts, each running on a different `localhost` port (unless you've decided to set it up otherwise):
+* **Windows/PowerShell**: Execute this command: `bash -c "curl -fsSL https://raw.githubusercontent.com/FusionAuth/fusionauth-install/master/install.sh | bash -s"`. This installation method installs the FusionAuth ZIP packages into the current working directory. You'll also need to manually install a database for FusionAuth to work. You can learn more about our Fast Path installation in our [Fast Path Installation Guide](https://fusionauth.io/docs/v1/tech/installation-guide/fast-path).
 
-- `localhost/8080` is your React app. It has a single route (`/`) and makes calls to the Express app.
-- `localhost/9000` is your Express app. It has several routes (like `/login` and `/logout`), which are used by the React app. The Express app makes calls to FusionAuth.
-- `localhost/9011` is your instance of FusionAuth. It has several endpoints (like `/authorize` and `/introspect`). It accepts calls from the Express app and sends back information, such as access tokens and user registration data.
+* **Windows/WSL**: If you have the Windows Subsystem for Linux installed, you can use the **Linux/Debian** instructions below.
 
-So, the parts connect like this:
+* **macOS/Homebrew**: Tap the FusionAuth cask with `brew tap fusionauth/homebrew-fusionauth`, then install with `brew install fusionauth-app`. If you want FusionAuth to always start when your machine boots, enable it as a service with `brew services start fusionauth-app`. You'll also need to manually install a database for FusionAuth to work. You can also review our [Homebrew Installation Guide](https://fusionauth.io/docs/v1/tech/installation-guide/homebrew) for more information.
 
-`8080 <-> 9000 <-> 9011`
+* **macOS/Manual**: Execute this command: `bash -c "curl -fsSL https://raw.githubusercontent.com/FusionAuth/fusionauth-install/master/install.sh | bash -s"`. This installation method installs the FusionAuth ZIP packages into the current working directory. You'll also need to manually install a database for FusionAuth to work. You can learn more about our Fast Path installation in our Fast [Path Installation Guide](https://fusionauth.io/docs/v1/tech/installation-guide/fast-path).
 
-The React app never talks directly to FusionAuth. This is important, because the React app can be easily picked apart by anyone online, which means you can't keep confidential information there. While some calls directly to FusionAuth are safe, best practice is to keep things separated like this.
+* **Linux/Manual**: Execute this command: `bash -c "curl -fsSL https://raw.githubusercontent.com/FusionAuth/fusionauth-install/master/install.sh | bash -s"`. This installation method installs the FusionAuth ZIP packages into the current working directory. You'll also need to manually install a database for FusionAuth to work. You can learn more about our Fast Path installation in our [Fast Path Installation Guide](https://fusionauth.io/docs/v1/tech/installation-guide/fast-path). You'll need to run the `startup.sh` script as well.
 
-### Logging In/Out
+* **Linux/Debian**: Copy and paste the shell command below: 
 
-When the user clicks on `sign in`, the React app redirects to the Express server's `/login` route, which redirects to FusionAuth's `authorize` endpoint. FusionAuth renders the username/password form, authenticates the user, and redirects to the configured Redirect URI (`/oauth-redirect` on the Express server) with an Authorization Code.
+    ```bash
+    VERSION=$(curl -fsSL https://license.fusionauth.io/api/latest-version) && \
+    curl -fsSL https://files.fusionauth.io/products/fusionauth/${VERSION}/fusionauth-app_${VERSION}-1_all.deb > fusionauth-app_${VERSION}-1_all.deb && \
+    sudo dpkg -i fusionauth-app_${VERSION}-1_all.deb && \
+    systemctl start fusionauth-app
+    ```
 
-The Express server sends the Authorization Code (as well as its Client ID and Secret) to FusionAuth's `/token` endpoint. FusionAuth validates everything and sends back an Access Token. The Express Server saves this token in session storage and redirects back to the React client.
+    This installation method installs the FusionAuth platform packages (DEBs) and will require sudo access. You'll also need to manually install a database for FusionAuth to work.
 
-When the user clicks on `sign out`, the React app sends a request to the Express server's `/logout` route, which sends a request to FusionAuth's `/logout` endpoint, deletes the relevant cookie, and deletes the Access Token from session storage.
+* **Linux/RedHat**: Copy and paste the shell command below:
 
-**The presence of the Access Token in session storage is what defines whether or not a user is logged in**, because FusionAuth will not allow retrieval or modification of user data without a valid Access Token.
+    ``bash
+    VERSION=$(curl -fsSL https://license.fusionauth.io/api/latest-version) && \
+    curl -fsSL https://files.fusionauth.io/products/fusionauth/${VERSION}/fusionauth-app-${VERSION}-1.noarch.rpm > fusionauth-app-${VERSION}-1.noarch.rpm && \
+    sudo rpm -i fusionauth-app-${VERSION}-1.noarch.rpm && \
+    systemctl start fusionauth-app
+    ```
 
-### Rendering the React App
+    This installation method installs the FusionAuth platform packages (RPMs) and will require sudo access. You'll also need to manually install a database for FusionAuth to work.
 
-When the React client mounts, it sends a request to the Express server's `/user` route. If there's an Access Token in session storage, the Express server uses FusionAuth's `/introspect` and `/registration` endpoints to get data for the current user; these give us the `token` and `registration` JSON objects seen in the example app.
+Once FusionAuth is running locally on port 9011 (the default), go [here](http://localhost:9011/admin) to log in as an admin and configure an asymmetric key, an application, and two users. If you have never run FusionAuth locally before, you will need to create an admin user (next).
 
-If there is no Access Token (or if it's expired), `/user` will instead return an empty object. The React components use the existence of `token` (or lack thereof) to determine whether to render the page in its logged-in or logged-out state.
+If you prefer to run FusionAuth from a remote server (such as the cloud), ...
 
-### Editing User Data
+### Create the Admin user
+This will only be necessary
 
-All of your FusionAuth users have a `registration.data` object for storing arbitrary data related to the user. The example app allows logged-in users to modify `registration.data.userData` by changing its value in the `<textarea>`, but all `registration` information is able to be set in this way.
+### Create the asymmetric key
 
-When the `<textarea>` is changed, the React client makes a request to the Express server's `/set-user-data` route, which makes a request to FusionAuth's `/registration` endpoint.
+### Create the application
 
-## Using This Example as a Starting Point
+### Configure the application to use the asymmetric key you created
 
-If you want to use this example app as a jumping-off point for your own FusionAuth app, you can easily strip it down or expand upon it.
+### Register the admin user to the application
 
-- remove, replace, or add React components in `/client/app/components/` and update references in `/client/app/index.js`
-- remove, replace, or add styles in `/client/app/styles/` and update references in `/client/app/index.css`
-- remove, replace, or add routes in `/server/routes/` and update references in `/server/index.js`
+### Create a non-admin user
 
-## Contributing
+### Register the non-admin user to the application
 
-TODO

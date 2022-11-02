@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open --port 4200"
   },
   "keywords": [],
   "author": "Matt Boisseau <matt@fusionauth.io>",

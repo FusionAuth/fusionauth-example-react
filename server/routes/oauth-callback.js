@@ -24,10 +24,11 @@ router.get('/', (req, res) => {
       // save token to session
       req.session.token = JSON.parse(body).access_token;
 
-      // redirect to the React app
+      // redirect to the Angular app
       res.redirect(`http://localhost:${config.clientPort}`);
     }
   );
 });
 
 module.exports = router;
+

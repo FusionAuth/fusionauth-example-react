@@ -6,25 +6,22 @@ const config = require('../../config');
 router.post('/', (req, res) => {
   // fetch the user using the token in the session so that we have their ID
   request(
-    // POST request to /introspect endpoint
     {
-      method: 'POST',
-      uri: `http://localhost:${config.fusionAuthPort}/oauth2/introspect`,
-      form: {
-        'client_id': config.clientID,
-        'token': req.session.token
+      method: 'GET',
+      uri: `http://localhost:${config.fusionAuthPort}/oauth2/userinfo`,
+      headers: {
+        'Authorization': 'Bearer ' + req.session.token
       }
     },
 
     // callback
     (error, response, body) => {
-      let introspectResponse = JSON.parse(body);
-
+      let userInfoResponse = JSON.parse(body);
       request(
         // PATCH request to /registration endpoint
         {
           method: 'PATCH',
-          uri: `http://localhost:${config.fusionAuthPort}/api/user/registration/${introspectResponse.sub}/${config.applicationID}`,
+          uri: `http://localhost:${config.fusionAuthPort}/api/user/registration/${userInfoResponse.sub}/${config.applicationID}`,
           headers: {
             'Authorization': config.apiKey
           },
@@ -34,6 +31,11 @@ router.post('/', (req, res) => {
               'data': req.body
             }
           }
+        },
+        (err2, response2, body2) => {
+          if (err2) {
+            console.log(err2);
+          }
         }
       );
     }
@@ -41,3 +43,4 @@ router.post('/', (req, res) => {
 });
 
 module.exports = router;
+
