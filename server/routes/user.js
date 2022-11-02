@@ -4,55 +4,44 @@ const request = require('request');
 const config = require('../../config');
 
 router.get('/', (req, res) => {
-  // token in session -> get user data and send it back to the react app
+  // token in session -> get user data and send it back to the Angular app
   if (req.session.token) {
     request(
-      // POST request to /introspect endpoint
       {
-        method: 'POST',
-        uri: `http://localhost:${config.fusionAuthPort}/oauth2/introspect`,
-        form: {
-          'client_id': config.clientID,
-          'token': req.session.token
+        method: 'GET',
+        uri: `http://localhost:${config.fusionAuthPort}/oauth2/userinfo`,
+        headers: {
+          'Authorization': 'Bearer ' + req.session.token
         }
       },
 
       // callback
       (error, response, body) => {
-        let introspectResponse = JSON.parse(body);
+        let userInfoResponse = JSON.parse(body);
 
-        // valid token -> get more user data and send it back to the react app
-        if (introspectResponse.active) {
-          request(
-            // GET request to /registration endpoint
-            {
-              method: 'GET',
-              uri: `http://localhost:${config.fusionAuthPort}/api/user/registration/${introspectResponse.sub}/${config.applicationID}`,
-              json: true,
-              headers: {
-                'Authorization': config.apiKey
-              }
-            },
-
-            // callback
-            (error, response, body) => {
-              res.send(
-                {
-                  token: {
-                    ...introspectResponse,
-                  },
-                  ...body
-                }
-              );
+        // valid token -> get more user data and send it back to the Angular app
+        request(
+          // GET request to /registration endpoint
+          {
+            method: 'GET',
+            uri: `http://localhost:${config.fusionAuthPort}/api/user/registration/${userInfoResponse.sub}/${config.applicationID}`,
+            json: true,
+            headers: {
+              'Authorization': config.apiKey
             }
-          );
-        }
+          },
 
-        // expired token -> send nothing
-        else {
-          req.session.destroy();
-          res.send({});
-        }
+          // callback
+          (error, response, body) => {
+            res.send(
+              {
+                ...userInfoResponse,
+                ...body // body is results from the registration endpoint
+                
+              }
+            );
+          }
+        );
       }
     );
   }
@@ -64,3 +53,4 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+

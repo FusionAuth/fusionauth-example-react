@@ -1,16 +1,15 @@
 module.exports = {
 
-	// FusionAuth info (copied from the FusionAuth admin panel)
-	clientID: '85a03867-dccf-4882-adde-1a79aeec50df',
-	clientSecret: 'JNlTw3c9B5NrVhF-cz3m0fp_YiBg-70hcDoiQ2Ot30I',
-	redirectURI: 'http://localhost:9000/oauth-callback',
-	applicationID: '85a03867-dccf-4882-adde-1a79aeec50df',
+  // These values must match what's in the kickstart/kickstart.json file
+  apiKey: 'this_really_should_be_a_long_random_alphanumeric_value_but_this_still_works_dont_use_this_in_prod',
+  applicationID: 'E9FDB985-9173-4E01-9D73-AC2D60D1DC8E',
+  clientID: 'E9FDB985-9173-4E01-9D73-AC2D60D1DC8E',
+  clientSecret: 'this_really_should_be_a_long_random_alphanumeric_value_but_this_still_works_dont_use_this_in_prod',
+  redirectURI: 'http://localhost:3000/oauth-callback',
 
-	// our FusionAuth api key
-	apiKey: 'bf69486b-4733-4470-a592-f1bfce7af580',
-
-	// ports
-	clientPort: 8080,
-	serverPort: 9000,
-	fusionAuthPort: 9011
+  //ports
+  clientPort: 4200,
+  serverPort: 3000,
+  fusionAuthPort: 9011
 };
+
