@@ -15,12 +15,12 @@ export default class LogInOut extends React.Component {
       : '';
 
     // textarea (locked if user not logged in)
-    let input = (this.props.body.token)
+    let input = (this.props.body.tid)
       ? <textarea placeholder={placeholder} onChange={this.props.handleTextInput} defaultValue={userData}></textarea>
       : <textarea placeholder={placeholder} readOnly></textarea>;
 
     // section title
-    let title = (this.props.body.token)
+    let title = (this.props.body.tid)
       ? <h2>Your User Data</h2>
       : <h2>Sign In to Edit Your User Data</h2>;
 

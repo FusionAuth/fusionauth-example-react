@@ -6,11 +6,12 @@ export default class LogInOut extends React.Component {
   }
 
   render() {
-    let message = (this.props.body.token)
+    console.log("this.props.body", this.props.body);
+    let message = (this.props.body.tid)
       ? 'sign out'
       : 'sign in';
 
-    let path = (this.props.body.token)
+    let path = (this.props.body.tid)
       ? '/logout'
       : '/login';
 
