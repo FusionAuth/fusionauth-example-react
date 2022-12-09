@@ -4,7 +4,7 @@
   "description": "Secure-React server",
   "main": "index.js",
   "scripts": {
-    "serve": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
