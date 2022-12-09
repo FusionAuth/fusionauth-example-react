@@ -4,10 +4,10 @@
         "apiKey": "this_really_should_be_a_long_random_alphanumeric_value_but_this_still_works",
         "asymmetricKeyId": "#{UUID()}",
         "defaultTenantId": "d7d09513-a3f5-401c-9685-34ab6c552453",
-        "adminEmail": "admin@fusionauthexample.com",
-        "adminPassword": "adminpassword",
-        "userEmail": "user@fusionauthexample.com",
-        "userPassword": "userpassword",
+        "adminEmail": "admin@example.com",
+        "adminPassword": "password",
+        "userEmail": "richard@example.com",
+        "userPassword": "password",
         "userUserId":  "00000000-0000-0000-0000-111111111111"
     },
     "apiKeys": [
@@ -73,8 +73,8 @@
                 "user": {
                     "birthDate": "1985-11-23",
                     "email": "#{userEmail}",
-                    "firstName": "Fred",
-                    "lastName": "Flintstone",
+                    "firstName": "Richard",
+                    "lastName": "Hendricks",
                     "password": "#{userPassword}"
                 },
                 "registration": {
