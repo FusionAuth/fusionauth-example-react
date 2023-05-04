@@ -1,4 +1,11 @@
 # Example: Using React with FusionAuth
+
+This repository is no longer maintained. Please visit [our updated React sample application](https://github.com/fusionauth/fusionauth-example-react-guide) repo.
+
+The new example app is available under the Apache2 license here: https://github.com/fusionauth/fusionauth-example-react-guide
+
+------
+
 This project contains an example project that illustrates using FusionAuth with a React front-end and a NodeJS/Express backend. This application will use an OAuth Authorization Code workflow and the PKCE (PKCE stands for Proof Key for Code Exchange, and is often pronounced “pixie”) extension to log users in and a NodeJS backend to store your access token securely.
 
 You can read the blog post here: https://fusionauth.io/blog/2020/03/10/securely-implement-oauth-in-react/
