@@ -1,5 +1,7 @@
 # Example: Using React with FusionAuth
 
+## No longer maintained
+
 This repository is no longer maintained. Please visit [our updated React sample application](https://github.com/fusionauth/fusionauth-example-react-guide) repo.
 
 The new example app is available under the Apache2 license here: https://github.com/fusionauth/fusionauth-example-react-guide
